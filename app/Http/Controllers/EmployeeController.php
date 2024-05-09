@@ -29,11 +29,12 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+
         $employeeData = $request->validate(
             [
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
-                'password' => 'required|password|confirmed'
+                'password' => 'required'
             ]
         );
 
@@ -41,7 +42,7 @@ class EmployeeController extends Controller
 
         User::create($employeeData);
 
-        return redirect()->back()->with(['employee' => 'employee created successfully']);
+        return redirect()->route('employees.index')->with(['message' => 'employee created successfully']);
     }
 
     /**
