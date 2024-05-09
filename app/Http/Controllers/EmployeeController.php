@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -10,11 +11,9 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
-        $employees = User::where('role', 'employee')->all();
-
-        return view('employees.index', compact('employees'));
+        return $dataTable->render('employees.index');
     }
 
     /**
