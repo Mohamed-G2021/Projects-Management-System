@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\UsersDataTable;
+use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
@@ -32,15 +33,9 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request)
     {
-        $employeeData = $request->validate(
-            [
-                'name' => 'required',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required'
-            ]
-        );
+        $employeeData = $request->validated();
 
         $employeeData['role'] = 'employee';
 
@@ -72,16 +67,11 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateEmployeeRequest $request, string $id)
     {
         $employee = User::findorFail($id);
 
-        $employeeData = $request->validate(
-            [
-                'name' => 'required',
-                'email' => 'required|email|unique:users,email,'.$employee->id,
-            ]
-        );
+        $employeeData = $request->validated;
 
         $employeeData['role'] = 'employee';
 

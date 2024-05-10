@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\api\EmployeeController;
+use App\Http\Controllers\api\EmployeeProjectsController;
+use App\Http\Controllers\api\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('employees', EmployeeController::class);
+Route::apiResource('projects', ProjectController::class);
+Route::post('employee-projects/{employee_id}', [EmployeeProjectsController::class, 'store']);
