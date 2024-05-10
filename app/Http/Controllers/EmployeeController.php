@@ -29,7 +29,6 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-
         $employeeData = $request->validate(
             [
                 'name' => 'required',
@@ -42,7 +41,7 @@ class EmployeeController extends Controller
 
         User::create($employeeData);
 
-        return redirect()->route('employees.index')->with(['message' => 'employee created successfully']);
+        return redirect()->route('employees.index')->with(['message' => 'employee added successfully']);
     }
 
     /**
@@ -50,13 +49,9 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        $employee = User::where('id', $id)->where('role', 'employee')->first();
+        $employee = User::findorFail($id);
 
-        if ($employee){
-            return view('employees.show', compact('empolyee'));
-        }else{
-            return redirect()->back()->withErrors(['employee' => 'Employee not found']);
-        }
+        return view('employees.show', compact('employee'));
     }
 
     /**
@@ -64,13 +59,9 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        $employee = User::where('id', $id)->where('role', 'employee')->first();
+        $employee = User::findorFail($id);
 
-        if ($employee){
-            return view('employees.edit', compact('employee'));
-        }else{
-            return redirect()->back()->withErrors(['employee' => 'Employee not found']);
-        }
+        return view('employees.edit', compact('employee'));
     }
 
     /**
@@ -78,19 +69,20 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = User::findorFail($id);
+
         $employeeData = $request->validate(
             [
                 'name' => 'required',
-                'email' => 'required|email|unique:users,email,'.$id,
-                'password' => 'required|password|confirmed'
+                'email' => 'required|email|unique:users,email,'.$user->id,
             ]
         );
 
         $employeeData['role'] = 'employee';
 
-        User::update($employeeData);
+        $user->update($employeeData);
 
-        return redirect()->back()->with(['employee' => 'employee updated successfully']);
+        return redirect()->route('employees.index')->with(['message' => 'employee updated successfully']);
     }
 
     /**
@@ -98,13 +90,9 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        $employee = User::where('id', $id)->where('role', 'employee')->first();
+        $employee = User::findorFail($id);
 
-        if ($employee){
-            $employee->delete();
-            return redirect()->back()->with(['employee' => 'employee deleted successfully']);
-        }else{
-            return redirect()->back()->withErrors(['employee' => 'Employee not found']);
-        }
+        $employee->delete();
+        return redirect()->route('employees.index')->with(['message' => 'employee deleted successfully']);
     }
 }
