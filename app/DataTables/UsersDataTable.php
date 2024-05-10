@@ -43,20 +43,20 @@ class UsersDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('users-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('users-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -65,17 +65,18 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('email'),
-            Column::make('role'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('id')->title(__('words.id')),
+            Column::make('name')->title(__('words.name')),
+            Column::make('email')->title(__('words.email')),
+            Column::make('role')->title(__('words.role')),
+            Column::make('created_at')->title(__('words.created_at')),
+            Column::make('updated_at')->title(__('words.updated_at')),
             Column::computed('actions')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center')
+                ->title(__('words.actions'))
         ];
     }
 

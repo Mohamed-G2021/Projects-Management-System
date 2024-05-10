@@ -2,17 +2,17 @@
 
 @section('content')
     <div class="container">
-        <h3>Assign project to {{$employee->name}}</h3>
-        <form method="post" action="{{route('employee-projects.store', $employee->id)}}" for>
+        <h3>{{ __('words.assign_project_to', ['name' => $employee->name]) }}</h3>
+        <form method="post" action="{{ route('employee-projects.store', $employee->id) }}">
             @csrf
-             <label>Projects</label>
+            <label>{{ __('words.projects') }}</label>
             <select class="projects" name="projects[]" multiple="multiple" required>
                 @foreach($projects as $project)
-                    <option value="{{$project->id}}">{{$project->name}}</option>
+                    <option value="{{ $project->id }}">{{ $project->name }}</option>
                 @endforeach
             </select>
 
-            <button type="submit" class="btn btn-primary">Assign projects</button>
+            <button type="submit" class="btn btn-primary">{{ __('words.assign_projects') }}</button>
         </form>
     </div>
 @endsection

@@ -6,10 +6,10 @@
             <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
         @endif
 
-            <div class="card">
-            <div class="card-header">Manage Projects</div>
+        <div class="card">
+            <div class="card-header">{{ __('words.manage_projects') }}</div>
             <div class="card-body">
-                <a href="{{ route('projects.create') }}" class="btn btn-primary">Add Project</a>
+                <a href="{{ route('projects.create') }}" class="btn btn-primary">{{ __('words.add_project') }}</a>
                 <br>
                 <br>
                 {{ $dataTable->table() }}

@@ -65,17 +65,18 @@ class ProjectsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('description'),
-            Column::make('deadline'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('id')->title(__('words.id')),
+            Column::make('name')->title(__('words.name')),
+            Column::make('description')->title(__('words.description')),
+            Column::make('deadline')->title(__('words.deadline')),
+            Column::make('created_at')->title(__('words.created_at')),
+            Column::make('updated_at')->title(__('words.updated_at')),
             Column::computed('actions')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center')
+                ->title(__('words.actions'))
         ];
     }
 
