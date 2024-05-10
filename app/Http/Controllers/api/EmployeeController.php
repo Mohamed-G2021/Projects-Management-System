@@ -48,6 +48,7 @@ class EmployeeController extends Controller
         $employee = User::where('id', $id)->first();
 
         if($employee){
+            $employee['projects'] = $employee->projects;
             return response()->json($employee);
         }else{
             return response()->json([

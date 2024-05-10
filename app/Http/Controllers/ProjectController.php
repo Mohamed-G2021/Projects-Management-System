@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ProjectsDataTable;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
-use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -31,15 +32,9 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $projectData = $request->validate(
-            [
-                'name' => 'required|unique:projects,name',
-                'description' => 'nullable',
-                'deadline' => 'nullable|date',
-            ]
-        );
+        $projectData = $request->validated();
 
         Project::create($projectData);
 
@@ -69,18 +64,11 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProjectRequest $request, string $id)
     {
         $project = Project::findorFail($id);
 
-        $projectData = $request->validate(
-            [
-                'name' => 'required|unique:projects,name,' . $project->id,
-                'description' => 'nullable',
-                'deadline' => 'nullable|date',
-            ]
-        );
-
+        $projectData = $request->validated();
 
         $project->update($projectData);
 
