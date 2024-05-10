@@ -9,6 +9,15 @@
             <div class="card-body">
                 <h5 class="card-title">Name: {{$project->name}}</h5>
                 <h5 class="card-title">description: {{$project->description}}</h5>
+                <h5 class="card-title">employees:</h5>
+                @if($project->employees)
+                    @foreach($project->employees as $employee)
+                        <li>
+                            {{$employee->name}}
+                        </li>
+                    @endforeach
+                @endif
+
                 <a href="{{route('projects.edit',$project->id)}}" class="btn btn-primary">Edit</a>
 
                 <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display: inline;">

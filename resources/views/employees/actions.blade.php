@@ -12,4 +12,8 @@
             Delete
         </button>
     </form>
+
+    <a href="{{ route('employee-projects.create', $id) }}" class="btn btn-primary btn-sm" title="assign projects">
+        Assign
+    </a>
 </div>

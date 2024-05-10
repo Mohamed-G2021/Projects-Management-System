@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeProjectsController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('employees', EmployeeController::class);
 Route::resource('projects', ProjectController::class);
+Route::get('employee-projects/{employee_id}', [EmployeeProjectsController::class, 'create'])->name('employee-projects.create');
+Route::post('employee-projects/{employee_id}', [EmployeeProjectsController::class, 'store'])->name('employee-projects.store');
