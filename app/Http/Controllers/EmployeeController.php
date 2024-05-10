@@ -69,18 +69,18 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = User::findorFail($id);
+        $employee = User::findorFail($id);
 
         $employeeData = $request->validate(
             [
                 'name' => 'required',
-                'email' => 'required|email|unique:users,email,'.$user->id,
+                'email' => 'required|email|unique:users,email,'.$employee->id,
             ]
         );
 
         $employeeData['role'] = 'employee';
 
-        $user->update($employeeData);
+        $employee->update($employeeData);
 
         return redirect()->route('employees.index')->with(['message' => 'employee updated successfully']);
     }
