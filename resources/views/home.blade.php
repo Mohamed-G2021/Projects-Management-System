@@ -14,7 +14,22 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    @if(Auth::user()->role == 'admin')
+                            {{ __('Hello Admin')}}
+                        @else
+                            {{ __('Hello') . ' '. Auth::user()->name }}
+                            <?php
+                                $employee = \App\Models\User::find(\Illuminate\Support\Facades\Auth::user()->id);
+                                ?>
+                        @if($employee->projects)
+                            {{ __('you are in projects')}}
+                            @foreach($employee->projects as $project)
+                                <li>
+                                    {{ $project->name }}
+                                </li>
+                            @endforeach
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>
