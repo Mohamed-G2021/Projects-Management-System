@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\EmployeeController;
+use App\Http\Controllers\api\EmployeeProjectsController;
+use App\Http\Controllers\api\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +20,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::group([
+    'prefix' => 'v1',
+    'middleware' => 'withFastApiKey'
+], function () {
+    Route::apiResource('employees', EmployeeController::class);
+    Route::apiResource('projects', ProjectController::class);
+    Route::post('employee-projects/{employee_id}', [EmployeeProjectsController::class, 'store']);
+
+    Route::post('register',[AuthController::class,'register']);
+    Route::post('login',[AuthController::class,'login']);
+    Route::post('logout',[AuthController::class,'logout'])
+        ->middleware('auth:sanctum');
 });
