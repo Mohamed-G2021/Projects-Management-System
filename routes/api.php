@@ -21,6 +21,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('employees', EmployeeController::class);
-Route::apiResource('projects', ProjectController::class);
-Route::post('employee-projects/{employee_id}', [EmployeeProjectsController::class, 'store']);
+
+Route::group([
+    'prefix' => 'v1',
+    'middleware' => 'withFastApiKey'
+], function () {
+    Route::apiResource('employees', EmployeeController::class);
+    Route::apiResource('projects', ProjectController::class);
+    Route::post('employee-projects/{employee_id}', [EmployeeProjectsController::class, 'store']);
+});
