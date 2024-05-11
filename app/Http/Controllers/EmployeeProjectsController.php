@@ -21,8 +21,15 @@ class EmployeeProjectsController extends Controller
         ]);
 
          $employee = User::findorFail($id);
-         $employee->projects()->attach($request->projects);
 
-         return redirect()->route('employees.index')->with(['message' => 'projects assigned successfully']);
+         foreach($request->projects as $project){
+             if($employee->projects->contains($project)) {
+                 return redirect()->route('employees.index')->with(['message' => 'Project already assigned']);
+             }
+         }
+
+        $employee->projects()->attach($request->projects);
+
+        return redirect()->route('employees.index')->with(['message' => 'projects assigned successfully']);
     }
 }
