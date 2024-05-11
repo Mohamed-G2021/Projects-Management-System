@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 
 class ProjectController extends Controller
@@ -17,7 +18,7 @@ class ProjectController extends Controller
         $projects = Project::all();
 
         if($projects){
-            return response()->json($projects);
+            return ProjectResource::collection($projects);
         }else{
             return response()->json([
                 'message' => 'Projects not found'
@@ -36,7 +37,7 @@ class ProjectController extends Controller
 
         return response()->json([
             'message' => 'project added successfully',
-            'project' => $project
+            'project' => new ProjectResource($project),
         ],201);
     }
 
@@ -48,7 +49,7 @@ class ProjectController extends Controller
         $project = Project::where('id', $id)->first();
 
         if($project){
-            return response()->json($project);
+            return new ProjectResource($project);
         }else{
             return response()->json([
                 'message' => 'Project not found'
@@ -70,7 +71,7 @@ class ProjectController extends Controller
 
             return response()->json([
                 'message' => 'project updated successfully',
-                'project' => $project
+                'project' => new ProjectResource($project),
             ]);
         }else{
             return response()->json([

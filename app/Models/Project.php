@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use \App\Models\Project;
+use App\Models\User;
 class Project extends Model
 {
     use HasFactory;
@@ -18,6 +18,6 @@ class Project extends Model
 
     public function employees() : BelongsToMany
     {
-        return $this->belongsToMany(Project::class, 'project_employee')->withTimestamps();
+        return $this->belongsToMany(User::class, 'project_employee')->withTimestamps();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Http\Resources\EmployeeResource;
 use App\Models\User;
 
 class EmployeeController extends Controller
@@ -17,7 +18,7 @@ class EmployeeController extends Controller
         $employees = User::where('role', 'employee')->get();
 
         if($employees){
-            return response()->json($employees);
+            return EmployeeResource::collection($employees);
         }else{
             return response()->json([
                'message' => 'Employees not found'
@@ -36,7 +37,7 @@ class EmployeeController extends Controller
 
         return response()->json([
            'message' => 'Employee added successfully',
-            'employee' => $employee
+            'employee' => new EmployeeResource($employee),
         ],201);
     }
 
@@ -48,8 +49,7 @@ class EmployeeController extends Controller
         $employee = User::where('id', $id)->first();
 
         if($employee){
-            $employee['projects'] = $employee->projects;
-            return response()->json($employee);
+            return new EmployeeResource($employee);
         }else{
             return response()->json([
                'message' => 'Employee not found'
@@ -71,7 +71,7 @@ class EmployeeController extends Controller
 
             return response()->json([
                 'message' => 'Employee updated successfully',
-                'employee' => $employee
+                'employee' => new EmployeeResource($employee),
             ]);
         }else{
             return response()->json([
