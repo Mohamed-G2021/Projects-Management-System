@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\EmployeeController;
 use App\Http\Controllers\api\EmployeeProjectsController;
 use App\Http\Controllers\api\ProjectController;
@@ -29,4 +30,9 @@ Route::group([
     Route::apiResource('employees', EmployeeController::class);
     Route::apiResource('projects', ProjectController::class);
     Route::post('employee-projects/{employee_id}', [EmployeeProjectsController::class, 'store']);
+
+    Route::post('register',[AuthController::class,'register']);
+    Route::post('login',[AuthController::class,'login']);
+    Route::post('logout',[AuthController::class,'logout'])
+        ->middleware('auth:sanctum');
 });
